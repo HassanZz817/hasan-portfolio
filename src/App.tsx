@@ -87,13 +87,13 @@ export default function App() {
       }
     }
 
-    function onMouseMove(e: MouseEvent) {
+    function scrub(clientX: number) {
       const video = videoRef.current
       if (!video || !video.duration) return
       const prevX = prevXRef.current
-      if (prevX === null) { prevXRef.current = e.clientX; return }
-      const delta = e.clientX - prevX
-      prevXRef.current = e.clientX
+      if (prevX === null) { prevXRef.current = clientX; return }
+      const delta = clientX - prevX
+      prevXRef.current = clientX
       const offset = (delta / window.innerWidth) * SENSITIVITY * video.duration
       targetTimeRef.current = Math.max(0, Math.min(video.duration, targetTimeRef.current + offset))
       if (!seekingRef.current) {
@@ -102,12 +102,20 @@ export default function App() {
       }
     }
 
+    function onMouseMove(e: MouseEvent) { scrub(e.clientX) }
+    function onTouchMove(e: TouchEvent) { scrub(e.touches[0].clientX) }
+    function onTouchStart(e: TouchEvent) { prevXRef.current = e.touches[0].clientX }
+
     const video = videoRef.current
     video?.addEventListener('seeked', onSeeked)
     window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('touchmove', onTouchMove, { passive: true })
+    window.addEventListener('touchstart', onTouchStart, { passive: true })
     return () => {
       video?.removeEventListener('seeked', onSeeked)
       window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('touchmove', onTouchMove)
+      window.removeEventListener('touchstart', onTouchStart)
     }
   }, [])
 
