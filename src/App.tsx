@@ -40,10 +40,10 @@ const STATS = [
 ]
 
 const CLIENTS = [
-  'GOSI', 'Al-Dawaa', 'WEFT', 'Snowwhite Arabia', 'Sold Out',
+  'GOSI', 'Al-Dawaa', 'Dinar', 'WEFT', 'Snowwhite Arabia', 'Sold Out',
   'MiniBites', 'Elanore', 'Dibsy', 'Lavendery', 'Recharge Fitness',
   'Takara', 'VOLO', 'NJUD', 'Abeel', 'Quara Projects',
-  'Graph Coffee', 'TierFaster', 'Dinar Third', 'Makhzny',
+  'Graph Coffee', 'TierFaster', 'Makhzny',
 ]
 
 const PILL_ACTIONS = [
@@ -453,6 +453,9 @@ export default function App() {
               {name}
             </span>
           ))}
+          <span className="border border-black/10 rounded-full px-5 py-2 text-sm sm:text-base text-black/30 italic">
+            many more…
+          </span>
         </div>
       </section>
 
